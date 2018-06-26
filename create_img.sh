@@ -18,7 +18,7 @@ trap finish EXIT
 # Creat the image
 if [ ! -e $IMG ]; then
 	qemu-img create $IMG 1g
-	mkfs.ext2 $IMG
+	mkfs.ext4 $IMG
 fi
 
 # Mount it
@@ -27,6 +27,3 @@ sudo mount -o loop $IMG $DIR
 
 # Create the contens
 sudo debootstrap --arch amd64 --include trace-cmd,kernelshark stretch $DIR
-
-# Setup root user
-sudo chroot $DIR
