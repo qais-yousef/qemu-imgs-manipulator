@@ -1,7 +1,21 @@
 #!/bin/bash
 set -eux
 
+#
+# REFERENCES:
+# - https://www.collabora.com/news-and-blog/blog/2017/01/16/setting-up-qemu-kvm-for-kernel-development/
+# - https://www.collabora.com/news-and-blog/blog/2017/03/13/kernel-debugging-with-qemu-overview-tools-available/
+#
+
 KERNEL=$1
 IMG=$2
+ARCH=x86_64
 
-qemu-system-x86_64 -kernel $KERNEL -hda $IMG  -append "root=/dev/sda console=ttyS0" -smp cpus=4,cores=2,threads=2 --enable-kvm --nographic
+qemu-system-$ARCH				\
+	-kernel $KERNEL				\
+	-hda $IMG				\
+	-append "root=/dev/sda console=ttyS0"	\
+	-smp cpus=4,cores=2,threads=2		\
+	--enable-kvm				\
+	--nographic				\
+	-net nic -net user
