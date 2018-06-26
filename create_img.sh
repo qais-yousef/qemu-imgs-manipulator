@@ -24,7 +24,7 @@ MOUNTED=1
 sudo mount -o loop $IMG $DIR
 
 # Create the contens
-sudo debootstrap --arch amd64 jessie $DIR
+sudo debootstrap --arch amd64 stretch $DIR
 
 # Setup root user
 sudo chroot $DIR
