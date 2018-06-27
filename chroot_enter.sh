@@ -1,8 +1,8 @@
 #!/bin/bash
 set -eux
 
-IMG=$1
-MNT=$(realpath $2)
+IMG=qemu-image.img
+MNT=$(realpath x86_fs)
 
 sudo mount $IMG $MNT
 sudo mount --bind /dev $MNT/dev
