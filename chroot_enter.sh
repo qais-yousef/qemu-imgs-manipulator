@@ -12,6 +12,9 @@ set -eux
 IMG=qemu-image.img
 MNT=$(realpath x86_fs)
 
+# Autocleanup on exit
+trap ./chroot_exit.sh EXIT
+
 sudo mount -o loop $IMG $MNT
 sudo mount --bind /dev $MNT/dev
 sudo mount --bind /sys $MNT/sys

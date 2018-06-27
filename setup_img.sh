@@ -1,9 +1,6 @@
 #!/bin/bash
 set -eux
 
-# Make sure to cleanup chroot at exit
-trap ./chroot_exit.sh EXIT
-
 # chroot into the image
 cat << EOF | ./chroot_enter.sh bash
 
