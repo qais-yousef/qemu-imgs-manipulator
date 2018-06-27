@@ -26,4 +26,7 @@ MOUNTED=1
 sudo mount -o loop $IMG $DIR
 
 # Create the contens
-sudo debootstrap --arch amd64 --include sudo,trace-cmd,kernelshark stretch $DIR
+sudo debootstrap --arch amd64 bionic $DIR http://archive.ubuntu.com/ubuntu/
+
+# Setup the image for our purposes
+./setup_img.sh
