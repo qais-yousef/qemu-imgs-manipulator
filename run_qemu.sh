@@ -15,7 +15,8 @@ qemu-system-$ARCH				\
 	-kernel $KERNEL				\
 	-hda $IMG				\
 	-append "root=/dev/sda console=ttyS0"	\
-	-smp cpus=4,cores=2,threads=2		\
+	-smp cores=4,threads=2			\
 	--enable-kvm				\
 	--nographic				\
+	-m 512					\
 	-net nic -net user

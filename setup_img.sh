@@ -26,7 +26,7 @@ apt update
 echo "/dev/sda	/	auto	defaults	0	1" > /etc/fstab
 
 # Install some software we usually need
-apt install trace-cmd
+apt install trace-cmd likwid
 
 # exit chroot
 exit
