@@ -1,8 +1,12 @@
 #!/bin/bash
-set -eux
+set -eu
+
+ARCH=$1
+IMG=$2
+MNT=$3
 
 # chroot into the image
-cat << EOF | ./chroot_enter.sh bash
+cat << EOF | $(dirname $0)/chroot_enter.sh $IMG $MNT bash
 
 set -eux
 

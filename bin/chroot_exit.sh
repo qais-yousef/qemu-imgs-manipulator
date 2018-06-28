@@ -1,7 +1,7 @@
 #!/bin/bash
-set -eux
+set -eu
 
-MNT=$(realpath x86_fs)
+MNT=$1
 
 sudo umount $MNT/dev
 sudo umount $MNT/sys

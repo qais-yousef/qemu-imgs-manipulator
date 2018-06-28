@@ -1,19 +1,19 @@
 #!/bin/bash
 
 # Allow the user to customise the command
-if [ -n "$1" ]; then
-	CMD=$1
+if [ -n "$3" ]; then
+	CMD=$3
 else
 	CMD="bash -i"
 fi
 
-set -eux
+set -eu
 
-IMG=qemu-image.img
-MNT=$(realpath x86_fs)
+IMG=$1
+MNT=$2
 
 # Autocleanup on exit
-trap ./chroot_exit.sh EXIT
+trap "$(dirname $0)/chroot_exit.sh $MNT" EXIT
 
 sudo mount -o loop $IMG $MNT
 sudo mount --bind /dev $MNT/dev
