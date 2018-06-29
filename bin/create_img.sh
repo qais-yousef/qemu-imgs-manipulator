@@ -30,15 +30,19 @@ fi
 MOUNTED=1
 sudo mount -o loop $IMG $TMP_DIR
 
-# Fix the arch name for x86_64, it's called amd64!
-if [ "$ARCH" == "x86_64" ]; then
-	ARCH__=amd64
-else
-	ARCH__=$ARCH
-fi
-
 # Create the contens
-sudo debootstrap --arch $ARCH__ bionic $TMP_DIR http://archive.ubuntu.com/ubuntu/
+if [ "$ARCH" == "x86_64" ]; then
+	sudo debootstrap --arch amd64 bionic $TMP_DIR http://archive.ubuntu.com/ubuntu/
+elif [ "$ARCH" == "i386" ]; then
+	sudo debootstrap --arch i386 bionic $TMP_DIR http://archive.ubuntu.com/ubuntu/
+elif [ "$ARCH" == "aarch64" ]; then
+	sudo qemu-debootstrap --arch arm64 stable $TMP_DIR
+elif [ "$ARCH" == "arm" ]; then
+	sudo qemu-debootstrap --arch arm stable $TMP_DIR
+else
+	echo "ERROR: unknown arch $ARCH"
+	exit -1
+fi
 
 # Setup the image for our purposes
 $(dirname $0)/setup_img.sh $ARCH $IMG $MNT
