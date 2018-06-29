@@ -5,6 +5,16 @@ ARCH=$1
 IMG=$2
 MNT=$3
 
+if [[ "$ARCH" == "x86_64" || "$ARCH" == "i386" ]]; then
+	EXTEND_REPO_CMD="echo \"deb http://archive.ubuntu.com/ubuntu bionic universe\" >> /etc/apt/sources.list"
+	ARCH_PACKAGES="likwid"
+	ARCH_ROOT_HDA="/dev/sda"
+else
+	EXTEND_REPO_CMD="echo \"deb http://deb.debian.org/debian stable universe\" >> /etc/apt/sources.list"
+	ARCH_PACKAGES=""
+	ARCH_ROOT_HDA="/dev/vda"
+fi
+
 # chroot into the image
 cat << EOF | $(dirname $0)/chroot_enter.sh $IMG $MNT bash
 
@@ -21,16 +31,16 @@ passwd -d $(whoami)
 usermod -G sudo,adm $(whoami)
 
 # Add more ubuntu repo to allow more software to be installed
-echo "deb http://archive.ubuntu.com/ubuntu bionic universe" >> /etc/apt/sources.list
+$EXTEND_REPO_CMD
 
 # Make sure apt is up-to-date after adding the repo
 apt update
 
 # Make sure our rootfs is mounted correctly, or it'd be readonly
-echo "/dev/sda	/	auto	defaults	0	1" > /etc/fstab
+echo "$ARCH_ROOT_HDA	/	auto	defaults	0	1" > /etc/fstab
 
 # Install some software we usually need
-apt install trace-cmd likwid
+apt install trace-cmd hwloc sudo $ARCH_PACKAGES
 
 # exit chroot
 exit
