@@ -33,7 +33,7 @@ NOTE:
 - Default arch is x86_64. All commands accept --arch option to select a different arch.
 - Use -h to print usage.
 
-### `create_img`
+### `./create_img`
 create_img will create x86_64 image by default. To select a different arch use --arch option.
 The created image is based on Ubuntu 18.04 Bionic for x86 and Debian Stable for ARM. It is setup at creation time to:
 
