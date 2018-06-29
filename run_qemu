@@ -54,12 +54,27 @@ KERNEL=$1
 # Information required by plumbing layer
 IMG=$(dirname $(realpath $0))/images/qemu-image-$ARCH.img
 
+if [[ "$ARCH" == "x86_64" || "$ARCH" == "i386" ]]; then
+	ARCH_OPTS="					\
+		--enable-kvm"
+	CMD_LINE="root=/dev/sda console=ttyS0"
+elif [[ "$ARCH" == "aarch64" || "$ARCH" == "arm" ]]; then
+	ARCH_OPTS="				\
+		-cpu cortex-a53			\
+		-machine virt"
+	CMD_LINE="root=/dev/vda"
+else
+	echo "ERROR: unknown arch $ARCH"
+	exit -1
+fi
+
+set -x
 sudo qemu-system-$ARCH				\
 	-kernel $KERNEL				\
 	-hda $IMG				\
-	-append "root=/dev/sda console=ttyS0"	\
+	-append "$CMD_LINE"			\
 	-smp cores=4,threads=2			\
-	--enable-kvm				\
 	--nographic				\
 	-m 512					\
-	-net nic -net user
+	-net nic -net user			\
+	$ARCH_OPTS
