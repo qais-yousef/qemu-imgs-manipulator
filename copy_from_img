@@ -5,13 +5,15 @@ function print_usage {
 	echo "Usage: $(basename $0) <src> <dst> [options]"
 	echo "	Options:"
 	echo "		--arch [arch]: x86_64(default)|i386|aarch64|arm"
+	echo "		-n|--dryrun: show the copy command that will be executed and exit"
 	echo "		-h|--help: print this help message"
 }
 
 ARCH=x86_64
+DRYRUN=0
 
-SHORTOPTS="h"
-LONGOPTS="arch:,help"
+SHORTOPTS="hn"
+LONGOPTS="arch:,help,dryrun"
 
 ARGS==`getopt -n "$(basename $0)" --options $SHORTOPTS --longoptions $LONGOPTS -- "$@"`
 
@@ -28,6 +30,10 @@ do
 		--arch)
 			shift
 			ARCH="$1"
+			;;
+
+		-n|--dryrun)
+			DRYRUN=1
 			;;
 
 		--)
@@ -50,6 +56,11 @@ do
 done
 
 DST=$(realpath $1)
+
+if [ $DRYRUN -eq 1 ]; then
+	echo "cp -r $SRC $DST"
+	exit 0
+fi
 
 # Information required by plumbing layer
 IMG=$(dirname $(realpath $0))/images/qemu-image-$ARCH.img
