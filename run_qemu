@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 
 #
 # REFERENCES:
@@ -13,14 +14,6 @@ function print_usage {
 	echo "		-h|--help: print this help message"
 }
 
-if [ $# -lt 1 ]; then
-	print_usage
-	exit -1
-fi
-
-set -eu
-
-KERNEL=$1
 ARCH=x86_64
 
 SHORTOPTS="h"
@@ -50,6 +43,13 @@ do
 	esac
 	shift
 done
+
+if [ $# -ne 1 ]; then
+	print_usage
+	exit -1
+fi
+
+KERNEL=$1
 
 # Information required by plumbing layer
 IMG=$(dirname $(realpath $0))/images/qemu-image-$ARCH.img
