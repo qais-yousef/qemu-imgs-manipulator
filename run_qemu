@@ -71,7 +71,8 @@ fi
 set -x
 sudo qemu-system-$ARCH				\
 	-kernel $KERNEL				\
-	-hda $IMG				\
+	-s \
+	-drive file=$IMG,format=raw,file.locking=off \
 	-append "$CMD_LINE"			\
 	-smp cores=4,threads=2			\
 	--nographic				\
