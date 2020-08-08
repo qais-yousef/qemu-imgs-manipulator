@@ -18,13 +18,20 @@ Create and handle qemu-imgs that are suitable to perform kernel testing/developm
 
 # run your experiment
 
-sudo shutodwn -h now     # When done
+poweroff	# When done
 ```
+
+## SSH access
+
+If you need to trigger some automated testing from the host, ssh access is
+available at port 10022.
+
+`ssh root@localhost -p 10022`
 
 ## TODO
 
 - Maybe must ensure uid of $(whoami) in the guest matches the host's.
-- Fix network support in the guest
+- <s>Fix network support in the guest</s>
 
 ## Commands
 
@@ -62,4 +69,4 @@ Run qemu using a created image as the rootfs. You can login as 'root' or '$(whoa
 
 Make sure to shutdown gracefully when done.
 
-`sudo shutdown -h now`
+`poweroff`
