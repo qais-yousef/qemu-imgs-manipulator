@@ -64,7 +64,7 @@ Type `exit` when finished.
 ### `./copy_{to,from}_img <src> <dst>`
 Copy files into and out of the image. Be careful with this command. Use -n option to see a dry run of the command that will be executed.
 
-### `./run_qemu`
+### `./run_qemu <kernel_img>`
 Run qemu using a created image as the rootfs. You can login as 'root' or '$(whoami)', the latter preferred so you can access created files from host/guest without permission problems.
 
 Make sure to shutdown gracefully when done.
