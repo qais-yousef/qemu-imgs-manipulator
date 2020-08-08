@@ -77,5 +77,5 @@ sudo qemu-system-$ARCH				\
 	-smp cores=4,threads=2			\
 	--nographic				\
 	-m 512					\
-	-net nic -net user			\
+	-net nic -net user,hostfwd=tcp::10022-:22 \
 	$ARCH_OPTS

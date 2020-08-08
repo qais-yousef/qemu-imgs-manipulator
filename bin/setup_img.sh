@@ -40,7 +40,17 @@ apt update
 echo "$ARCH_ROOT_HDA	/	auto	defaults	0	1" > /etc/fstab
 
 # Install some software we usually need
-apt install trace-cmd hwloc sudo $ARCH_PACKAGES
+apt install -y vim trace-cmd hwloc sudo $ARCH_PACKAGES
+
+# Install network and sshd packagers
+apt install -y net-tools ifupdown network-manager openssh-server
+
+sed -i 's/#PermitEmptyPasswords.*/PermitEmptyPasswords yes/' /etc/ssh/sshd_config
+sed -i 's/#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+sed -i 's/UsePAM.*/UsePAM no/' /etc/ssh/sshd_config
+
+echo "auto enp0s3" >> /etc/network/interfaces
+echo "iface enp0s3 inet dhcp" >> /etc/network/interfaces
 
 # exit chroot
 exit
