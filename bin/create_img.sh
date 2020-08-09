@@ -38,7 +38,7 @@ elif [ "$ARCH" == "i386" ]; then
 elif [ "$ARCH" == "aarch64" ]; then
 	sudo qemu-debootstrap --arch arm64 stable $TMP_DIR
 elif [ "$ARCH" == "arm" ]; then
-	sudo qemu-debootstrap --arch arm stable $TMP_DIR
+	sudo qemu-debootstrap --arch armel stable $TMP_DIR
 else
 	echo "ERROR: unknown arch $ARCH"
 	exit -1
