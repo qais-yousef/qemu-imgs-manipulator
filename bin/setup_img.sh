@@ -6,11 +6,9 @@ IMG=$2
 MNT=$3
 
 if [[ "$ARCH" == "x86_64" || "$ARCH" == "i386" ]]; then
-	EXTEND_REPO_CMD="echo \"deb http://archive.ubuntu.com/ubuntu bionic universe\" >> /etc/apt/sources.list"
 	ARCH_PACKAGES="likwid"
 	ARCH_ROOT_HDA="/dev/sda"
 else
-	EXTEND_REPO_CMD="echo \"deb http://deb.debian.org/debian stable universe\" >> /etc/apt/sources.list"
 	ARCH_PACKAGES=""
 	ARCH_ROOT_HDA="/dev/vda"
 fi
@@ -30,8 +28,8 @@ passwd -d $(whoami)
 # Make admin and sudoer
 usermod -G sudo,adm $(whoami)
 
-# Add more ubuntu repo to allow more software to be installed
-$EXTEND_REPO_CMD
+# Add universe repo to allow more software to be installed
+echo "deb http://deb.debian.org/debian stable universe" >> /etc/apt/sources.list
 
 # Make sure apt is up-to-date after adding the repo
 apt update
@@ -48,9 +46,6 @@ apt install -y net-tools ifupdown network-manager openssh-server
 sed -i 's/#PermitEmptyPasswords.*/PermitEmptyPasswords yes/' /etc/ssh/sshd_config
 sed -i 's/#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 sed -i 's/UsePAM.*/UsePAM no/' /etc/ssh/sshd_config
-
-echo "auto enp0s3" >> /etc/network/interfaces
-echo "iface enp0s3 inet dhcp" >> /etc/network/interfaces
 
 # exit chroot
 exit

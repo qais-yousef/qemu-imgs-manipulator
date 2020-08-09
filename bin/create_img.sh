@@ -32,9 +32,9 @@ sudo mount -o loop $IMG $TMP_DIR
 
 # Create the contens
 if [ "$ARCH" == "x86_64" ]; then
-	sudo debootstrap --arch amd64 bionic $TMP_DIR http://archive.ubuntu.com/ubuntu/
+	sudo debootstrap --arch amd64 stable $TMP_DIR
 elif [ "$ARCH" == "i386" ]; then
-	sudo debootstrap --arch i386 bionic $TMP_DIR http://archive.ubuntu.com/ubuntu/
+	sudo debootstrap --arch i386 stable $TMP_DIR
 elif [ "$ARCH" == "aarch64" ]; then
 	sudo qemu-debootstrap --arch arm64 stable $TMP_DIR
 elif [ "$ARCH" == "arm" ]; then
