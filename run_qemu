@@ -58,9 +58,14 @@ if [[ "$ARCH" == "x86_64" || "$ARCH" == "i386" ]]; then
 	ARCH_OPTS="					\
 		--enable-kvm"
 	CMD_LINE="root=/dev/sda console=ttyS0"
-elif [[ "$ARCH" == "aarch64" || "$ARCH" == "arm" ]]; then
+elif [[ "$ARCH" == "aarch64" ]]; then
 	ARCH_OPTS="				\
 		-cpu cortex-a53			\
+		-machine virt"
+	CMD_LINE="root=/dev/vda"
+elif [[ "$ARCH" == "arm" ]]; then
+	ARCH_OPTS="				\
+		-cpu cortex-a15			\
 		-machine virt"
 	CMD_LINE="root=/dev/vda"
 else
