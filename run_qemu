@@ -56,15 +56,19 @@ IMG=${IMG:-$(dirname $(realpath $0))/images/qemu-image-$ARCH.img}
 
 if [[ "$ARCH" == "x86_64" || "$ARCH" == "i386" ]]; then
 	ARCH_OPTS="					\
+		-drive file=$IMG,format=raw,file.locking=off \
 		--enable-kvm"
 	CMD_LINE="root=/dev/sda console=ttyS0"
 elif [[ "$ARCH" == "aarch64" ]]; then
 	ARCH_OPTS="				\
+		-drive file=$IMG,format=raw,file.locking=off \
 		-cpu cortex-a53			\
 		-machine virt"
 	CMD_LINE="root=/dev/vda"
 elif [[ "$ARCH" == "arm" ]]; then
 	ARCH_OPTS="				\
+		-drive if=none,file=$IMG,format=raw,id=hd \
+		-device virtio-blk-device,drive=hd	\
 		-cpu cortex-a15			\
 		-machine virt"
 	CMD_LINE="root=/dev/vda"
@@ -77,7 +81,6 @@ set -x
 sudo qemu-system-$ARCH				\
 	-kernel $KERNEL				\
 	-s \
-	-drive file=$IMG,format=raw,file.locking=off \
 	-append "$CMD_LINE"			\
 	-smp cores=4,threads=2			\
 	--nographic				\
