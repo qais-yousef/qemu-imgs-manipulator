@@ -43,7 +43,7 @@ IMG=$(dirname $(realpath $0))/images/qemu-image-$ARCH.img
 MNT=$(dirname $(realpath $0))/mnt/$ARCH
 
 # Make sure to cleanup on exit
-trap "$(dirname $0)/bin/umount_img.sh $MNT" EXIT
+trap "popd &> /dev/null && $(dirname $0)/bin/umount_img.sh $MNT" EXIT
 
 sudo mount -o loop $IMG $MNT
 
@@ -53,4 +53,3 @@ echo "#"
 
 pushd $MNT/home/$(whoami) &> /dev/null
 bash -i
-popd &> /dev/null
