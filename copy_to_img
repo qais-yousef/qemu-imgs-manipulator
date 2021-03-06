@@ -73,6 +73,5 @@ sudo mount -o loop $IMG $MNT
 
 pushd $MNT &> /dev/null
 
-set -x
-cp -r $SRC $DST
-set +x
+echo "cp -r $SRC $DST"
+sudo cp -r $SRC $DST
