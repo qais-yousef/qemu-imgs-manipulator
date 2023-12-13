@@ -30,15 +30,17 @@ fi
 MOUNTED=1
 sudo mount -o loop $IMG $TMP_DIR
 
-# Create the contens
+DEBOOTSTRAP=$(which qemu-debootstrap || which debootstrap)
+
+# Create the contents
 if [ "$ARCH" == "x86_64" ]; then
-	sudo debootstrap --arch amd64 stable $TMP_DIR
+	sudo ${DEBOOTSTRAP} --arch amd64 stable $TMP_DIR
 elif [ "$ARCH" == "i386" ]; then
-	sudo debootstrap --arch i386 stable $TMP_DIR
+	sudo ${DEBOOTSTRAP} --arch i386 stable $TMP_DIR
 elif [ "$ARCH" == "aarch64" ]; then
-	sudo qemu-debootstrap --arch arm64 stable $TMP_DIR
+	sudo ${DEBOOTSTRAP} --arch arm64 stable $TMP_DIR
 elif [ "$ARCH" == "arm" ]; then
-	sudo qemu-debootstrap --arch armel stable $TMP_DIR
+	sudo ${DEBOOTSTRAP} --arch armel stable $TMP_DIR
 else
 	echo "ERROR: unknown arch $ARCH"
 	exit -1
