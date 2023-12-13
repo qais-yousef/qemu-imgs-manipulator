@@ -4,7 +4,7 @@ Create and handle qemu-imgs that are suitable to perform kernel testing/developm
 
 ## Requirements
 
-`apt install qemu qemu-user-static debootstrap`
+`sudo apt install qemu-system qemu-user-static debootstrap`
 
 ## Usage
 
