@@ -38,7 +38,7 @@ apt update
 echo "$ARCH_ROOT_HDA	/	auto	defaults	0	1" > /etc/fstab
 
 # Install some software we usually need
-apt install -y vim trace-cmd hwloc sudo $ARCH_PACKAGES
+apt install -y vim trace-cmd hwloc sudo linux-perf rt-tests $ARCH_PACKAGES
 
 # Install network and sshd packagers
 apt install -y net-tools ifupdown network-manager openssh-server

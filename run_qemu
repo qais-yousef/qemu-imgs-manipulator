@@ -82,8 +82,8 @@ sudo qemu-system-$ARCH				\
 	-kernel $KERNEL				\
 	-s \
 	-append "$CMD_LINE"			\
-	-smp cores=4,threads=2			\
+	-smp cores=6,threads=2			\
 	--nographic				\
-	-m 512					\
+	-m 1024					\
 	-net nic -net user,hostfwd=tcp::10022-:22 \
 	$ARCH_OPTS
