@@ -11,13 +11,15 @@ function print_usage {
 	echo "Usage: $(basename $0) <path/to/kernel/image> [options]"
 	echo "	Options:"
 	echo "		--arch [arch]: x86_64(default)|i386|aarch64|arm"
+	echo "		--kvm: Enable KVM (only valid for Intel archs)"
 	echo "		-h|--help: print this help message"
 }
 
 ARCH=x86_64
+KVM=""
 
 SHORTOPTS="h"
-LONGOPTS="arch:,help"
+LONGOPTS="arch:,kvm,help"
 
 ARGS==`getopt -n "$(basename $0)" --options $SHORTOPTS --longoptions $LONGOPTS -- "$@"`
 
@@ -36,6 +38,9 @@ do
 			ARCH="$1"
 			;;
 
+		--kvm)
+			KVM="--enable-kvm"
+			;;
 		--)
 			shift
 			break
@@ -57,7 +62,7 @@ IMG=${IMG:-$(dirname $(realpath $0))/images/qemu-image-$ARCH.img}
 if [[ "$ARCH" == "x86_64" || "$ARCH" == "i386" ]]; then
 	ARCH_OPTS="					\
 		-drive file=$IMG,format=raw,file.locking=off \
-		--enable-kvm"
+		${KVM}"
 	CMD_LINE="root=/dev/sda console=ttyS0"
 elif [[ "$ARCH" == "aarch64" ]]; then
 	ARCH_OPTS="				\
