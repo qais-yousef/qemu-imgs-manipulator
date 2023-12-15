@@ -61,18 +61,18 @@ IMG=${IMG:-$(dirname $(realpath $0))/images/qemu-image-$ARCH.img}
 
 if [[ "$ARCH" == "x86_64" || "$ARCH" == "i386" ]]; then
 	ARCH_OPTS="					\
-		-drive file=$IMG,format=raw,file.locking=off \
+		-drive file=$IMG,format=raw,file.locking=off,snapshot=on \
 		${KVM}"
 	CMD_LINE="root=/dev/sda console=ttyS0"
 elif [[ "$ARCH" == "aarch64" ]]; then
 	ARCH_OPTS="				\
-		-drive file=$IMG,format=raw,file.locking=off \
+		-drive file=$IMG,format=raw,file.locking=off,snapshot=on \
 		-cpu cortex-a53			\
 		-machine virt"
 	CMD_LINE="root=/dev/vda"
 elif [[ "$ARCH" == "arm" ]]; then
 	ARCH_OPTS="				\
-		-drive if=none,file=$IMG,format=raw,id=hd \
+		-drive if=none,file=$IMG,format=raw,id=hd,snapshot=on \
 		-device virtio-blk-device,drive=hd	\
 		-cpu cortex-a15			\
 		-machine virt"
